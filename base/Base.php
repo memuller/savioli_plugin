@@ -28,7 +28,10 @@
 		static function build(){
 			parent::build();
 			add_filter( 'got_rewrite', '__return_true', 999 );
-
+			
+			add_action('admin_init', function(){
+				register_setting('clinica-savioli_options', 'clinica-savioli_options');
+			});
 		}
 
 	}

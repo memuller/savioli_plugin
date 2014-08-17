@@ -4,27 +4,9 @@
 
 	class Base extends Presenter {
 
-		static $actions = array(
-			#'filter_videos' => array('archive' => 'video')
-		);
-
 		static function build(){
 			$presenter = get_called_class() ;
 			parent::build();
-
-			add_action('pre_get_posts', function($query){
-				global $wp_query; $vars = &$wp_query->query_vars;
-
-				if(!$query->is_main_query()) return ; 
-				if(!$vars['is_archive'] && !$vars['post_type'] == 'video') return ;
-				
-				if(isset($vars['video_filter'])){
-					$query->set('meta_key', 'type');
-					$query->set('meta_value', 
-						$vars['video_filter'] == 'melhores-momentos' ? 'selected' : 'complete'
-					);
-				}
-			});
 
 			# removes image from the W3TC menu background (so it can use the Dashicons font).
 			add_action('admin_footer', function(){?>
@@ -48,51 +30,19 @@
 				});
 			});
 
-			add_action('admin_notices', function(){
-				$results = \ClinicaSavioli\Video::all(array('meta_query' => array(
-					'relation' => 'OR',
-					array(
-						'key' => 'travel', 'value' => false, 'type' => 'BOOLEAN'
-					),
-					array(
-						'key' => 'travel', 'compare' => 'NOT EXISTS', 'value' => 'none'
-					)
-				), 'post_status' => 'draft'));
-				if(empty($results)) return null ;
-			?> 
-				<div class='update-nag'>
-					<a href="<?php echo admin_url('/edit.php?post_type=video'); ?>">Novos vídeos encontrados</a>
-					 - associe-os a uma Viagem ou exclua-os.
-				</div>	
-			<?php });
-
 			add_action('admin_menu', function() use($presenter){
-				add_submenu_page('edit.php?post_type=video', 'Configurações do Youtube', 'Configurações', 'manage_options', 'ClinicaSavioli_video_options', function() use($presenter){
-						$options = get_option('tern_wp_youtube');
-						if($_SERVER['REQUEST_METHOD'] == 'POST'){
-							$options['channels'][1]['channel'] = $_POST['ClinicaSavioli_video_options']['channel'];
-							update_option('tern_wp_youtube', $options);
-						}
-						if($_REQUEST['import']){
-							WP_ayvpp_add_posts(1,'*');
-						}
-
-						$presenter::render('admin/video', array(
-							'page' => '?page=ClinicaSavioli_video_options',
-							'options' => array('channel' => $options['channels'][1]['channel'])
+				add_submenu_page('options-general.php', 'Conteúdo Externo', 'Conteúdo Externo', 'manage_options', 'clinica-savioli_options', function() use($presenter){
+						$presenter::render('admin/options', array(
+							'active_tab' => isset($_GET['tab']) ? $_GET['tab'] : 'shipping', 
+							'page' => '?page=clinica-savioli_options',
+							'options' => array_merge(array(
+								'blogs' => array(),
+								'blogs_num_posts' => 2,
+								'magento_url' => '',
+								'magento_num_posts' => 3
+							),get_option('clinica-savioli_options', array()))
 						));
 				});	
-			});
-			add_action('admin_init', function(){
-				register_setting('ClinicaSavioli_video_options', 'ClinicaSavioli_video_options') ;
-			
-			});
-
-			add_action('request', function($query){
-				if(isset($query['feed'])){
-					$query['post_type'] = array('travel');
-				}
-				return $query; 
 			});
 		}
 	}
