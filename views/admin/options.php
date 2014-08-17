@@ -32,7 +32,7 @@
 							Quantidade de Posts
 						</th>
 						<td>
-							<input type='number' size=20 name='clinica-savioli_options[blogs_num_posts]' 
+							<input type='number' name='clinica-savioli_options[blogs_num_posts]' 
 								value='<?php echo $options['blogs_num_posts'] ?>'/>
 						</td>
 				</tbody>
@@ -56,7 +56,7 @@
 							Quantidade de Produtos
 						</th>
 						<td>
-							<input type='number' size=20 name='clinica-savioli_options[magento_num_posts]' 
+							<input type='number' name='clinica-savioli_options[magento_num_posts]' 
 								value='<?php echo $options['magento_num_posts'] ?>'/>
 						</td>
 					</tr>
