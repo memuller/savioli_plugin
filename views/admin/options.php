@@ -17,8 +17,10 @@
 									'name' => "clinica-savioli_options[blogs][$i]"
 								));?>>
 									<?php foreach (wp_get_sites() as $site): ?>
-										<option value="<?php echo $site['blog_id'] ?>" <?php echo $options['blogs'][$i] == $site['blog_id'] ? 'selected' : '' ?>>
-										<?php echo $site['domain']. $site['path'] ?>
+										<option <?php html_attributes(array('value' => $site['blog_id'],
+											'selected' => $options['blogs'][$i] == $site['blog_id']
+										))?>>
+											<?php echo $site['domain']. $site['path'] ?>
 										</option>
 									<?php endforeach ?>
 								</select></br>	
@@ -31,7 +33,7 @@
 						</th>
 						<td>
 							<input type='number' size=20 name='clinica-savioli_options[blogs_num_posts]' 
-								value='<?php echo $options['blogs_num_posts'] ?>'/>q
+								value='<?php echo $options['blogs_num_posts'] ?>'/>
 						</td>
 				</tbody>
 			</table>
