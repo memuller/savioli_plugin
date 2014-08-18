@@ -6,6 +6,9 @@ class MagentoProduct {
 	static function build_database(){}
 
 	static function all($ammount = null){
+		$products = get_transient('clinica-savioli_magento_products');
+
+		if($products) return $products ;
 		$options = get_option('clinica-savioli_options');
 		if(!isset($ammount)) $ammount = $options['magento_num_posts'];
 		$html = file_get_dom($options['magento_url']);
@@ -19,6 +22,7 @@ class MagentoProduct {
 			$object->url = $product('a.product-image',0)->href ;
 			$products[]= $object;
 		}
+		set_transient('clinica-savioli_magento_products', $products, 60*60);
 		return $products;
 	}
 
