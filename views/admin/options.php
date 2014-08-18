@@ -17,6 +17,7 @@
 									'name' => "clinica-savioli_options[blogs][$i]"
 								));?>>
 									<?php foreach (wp_get_sites() as $site): ?>
+										<?php if(get_current_blog_id() == $site['blog_id']) continue; ?>
 										<option <?php html_attributes(array('value' => $site['blog_id'],
 											'selected' => $options['blogs'][$i] == $site['blog_id']
 										))?>>
