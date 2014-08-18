@@ -19,7 +19,9 @@ class ForeignPost extends BaseItem {
 		return $posts ; 
 	}
 
-
+	public function user_avatar($size=96){
+		return get_avatar($this->post_author, $size);
+	}
 
 	
 
