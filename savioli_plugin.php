@@ -43,7 +43,7 @@
 	# Requires WP table/list framework.
 	if(!class_exists('WP_List_Table')) require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 
-	require 'vendors/simplehtmldom_1_5/simple_html_dom.php' ;
+	require 'vendors/ganon.php' ;
 
 	require 'base/Base.php' ;
 	ClinicaSavioli\Plugin::build();

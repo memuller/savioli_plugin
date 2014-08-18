@@ -8,6 +8,7 @@
 		static $custom_posts = array();
 		static $custom_taxonomies = array();
 		static $custom_post_formats = array();
+		static $custom_classes = array('ForeignPost', 'MagentoProduct');
 		static $custom_users = array();
 		static $presenters = array();
 		static $has_translations = false ;
