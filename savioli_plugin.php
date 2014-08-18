@@ -1,9 +1,9 @@
 <?php
 	/*
 	Plugin Name: Savioli
-	Version: 0.0.1
+	Version: 04.08.13
 	Plugin URI: http://clinicasavioli.com.br
-	Description:
+	Description: Plugin do site Clínica Savioli. Usar somente no site principal.
 	Author: Agência Point, Matheus Muller
 	Author URI: http://memuller.com
 	*/
